@@ -1,10 +1,16 @@
 from app import db
+import uuid
+import enum
+
+
+def generate_uuid():
+   return str(uuid.uuid4())
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nickname = db.Column(db.String(64), index=True, unique=True)
+    nickname = db.Column(db.String(64), index=True, unique=False)
     social_id = db.Column(db.String(64), nullable=False, unique=True, server_default="err")
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     @property
     def is_authenticated(self):
@@ -28,11 +34,30 @@ class User(db.Model):
         return '<User %r>' % (self.nickname)
 
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+class BookRecord(db.Model):
+    uuid = db.Column(db.String, name="uuid", primary_key=True, default=generate_uuid)
+    create_user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    name = db.Column(db.String(200), index=True, unique=False)
+    book_type = db.Column(db.String(200), index=True, unique=False)
+    author = db.Column(db.String(200), index=True, unique=False)
+    description = db.Column(db.String(1024), index=True, unique=False)
+    language = db.Column(db.String(100), index=True, unique=False)
+    service_type = db.Column(db.String(100), index=True)
+    target_place = db.Column(db.String(1024), index=True, unique=False)
+    price = db.Column(db.Integer)
+    is_exchanged = db.Column(db.Boolean, default=False, nullable=False)
 
-    def __repr__(self):
-        return '<Post %r>' % (self.body)
+
+class UserWantList(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), index=True, unique=False)
+
+
+class ExchangeRecord(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    to_user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    from_start = db.Column(db.Integer, default=0)
+    to_start = db.Column(db.Integer, default=0)
+
+
