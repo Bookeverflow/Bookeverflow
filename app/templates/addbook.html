@@ -17,7 +17,6 @@
 
 {% block content %}
 
-  <!-- Search Bar -->
   <form method="post" class="addbookform" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
@@ -27,7 +26,24 @@
     {{ render_field(form.language) }}
     {{ render_field(form.description) }}
     {{ render_field(form.price) }}
-    {{ render_field(form.service_type) }}
+    <div class="form-group">
+      <label for="formGroupExampleInput">Service type </label> <br>
+      <label class="custom-control custom-radio">
+        <input id="service_type1" value="rent" name="service_type" type="radio" checked class="custom-control-input">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">rent</span>
+      </label>
+      <label class="custom-control custom-radio">
+        <input id="service_type2" value="free" name="service_type" type="radio" class="custom-control-input">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">free giving</span>
+      </label>
+      <label class="custom-control custom-radio">
+        <input id="service_type3" value="exchange" name="service_type" type="radio" class="custom-control-input">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">exchane to other</span>
+      </label>
+    </div>
     {{ render_field(form.target_place) }}
     {{ render_field(form.image) }}
   </form>

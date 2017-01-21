@@ -17,7 +17,9 @@
   background-origin: content-box;
   background-size: contain;
   background-repeat: no-repeat;
+  height: 100%;
 }
+
 .headroom{
     transition:transform .25s ease-in-out;
     will-change:transform
@@ -29,4 +31,9 @@
 
 .headroom--unpinned{
     transform:translateY(-120%)
+}
+
+.row.vertical-align {
+    display: flex;
+    align-items: center;
 }

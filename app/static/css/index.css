@@ -14,3 +14,16 @@
   border-radius: 4px;
   margin: 7px 10px;
 }
+
+.recordwrapper {
+  cursor: pointer;
+}
+
+.recordwrapper:hover {
+  background-color: rgb(200, 200, 200);
+}
+
+.break-field {
+  font-size: small;
+  word-break: break-all;
+}

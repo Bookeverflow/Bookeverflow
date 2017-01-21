@@ -27,6 +27,8 @@ def index():
             'image': record.get_image(),
             'name': record.name,
             'author': record.author,
+            'description': record.description if len(record.description) < 100 \
+        else record.description[:100] + '...',
             'service_type': record.service_type,
             'language': record.language
         } for record in bookrecords]
@@ -97,7 +99,7 @@ def addbook():
         newbook.language = form.language.data
         newbook.target_place = form.target_place.data
         newbook.price = form.price.data
-        newbook.service_type = form.service_type.data
+        newbook.service_type = request.form['service_type']
         newbook.is_exchanged = False
 
         db.session.add(newbook)
@@ -119,5 +121,9 @@ def addbook():
                            form=form)
 
 
-# @app.route('/bookdetail', methods=['GET', 'POST'])
-# def
+@app.route('/bookdetail/<record_uuid>', methods=['GET', 'POST'])
+def bookdetail(record_uuid):
+    bookrecord = BookRecord.query.filter_by(uuid=record_uuid).first()
+    return render_template('bookdetail.html',
+                           title=bookrecord.name,
+                           bookrecord=bookrecord)
