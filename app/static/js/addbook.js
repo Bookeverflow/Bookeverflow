@@ -1,7 +1,7 @@
 (function ($) {
   $(document).ready(function(){
 
-    $(".confirmBtn").click(function() {
+    $(".actionBtn").click(function() {
         $('.addbookform').submit();
     });
 });

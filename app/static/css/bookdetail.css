@@ -1,0 +1,23 @@
+.book-img {
+  max-width: 100%;
+}
+
+.title {
+  display: block;
+  text-align: center!important;
+  text-decoration: underline;
+}
+
+ul { display:table; margin:0 auto;}
+li {
+  word-break: break-all;
+}
+
+.share-list {
+  font-size: 30px;
+  font-family: 'Bungee Shade', cursive;
+}
+
+.fa-star {
+  color: yellow;
+}

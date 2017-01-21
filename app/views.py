@@ -32,7 +32,6 @@ def index():
             'service_type': record.service_type,
             'language': record.language
         } for record in bookrecords]
-    # books = books * 10
     return render_template('index.html',
                            title='bookeverflow',
                            books=books)
@@ -123,7 +122,9 @@ def addbook():
 
 @app.route('/bookdetail/<record_uuid>', methods=['GET', 'POST'])
 def bookdetail(record_uuid):
-    bookrecord = BookRecord.query.filter_by(uuid=record_uuid).first()
+    book = BookRecord.query.filter_by(uuid=record_uuid).first()
+    current_owner = User.query.filter_by(id=book.create_user).first()
     return render_template('bookdetail.html',
-                           title=bookrecord.name,
-                           bookrecord=bookrecord)
+                           title=book.name,
+                           book=book,
+                           current_owner=current_owner)

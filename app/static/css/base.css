@@ -1,3 +1,18 @@
+* {
+  font-family: 'Crimson Text', serif;
+}
+
+.actionBtn {
+  color: blue;
+  font-family: 'Bungee Shade', cursive;
+  cursor: pointer;
+}
+
+.actionBtn:hover {
+  color: black;
+  text-decoration: underline;
+}
+
 #header {
     position: fixed;
     width: 100%;

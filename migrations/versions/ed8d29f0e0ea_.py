@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b88539daf71f
+Revision ID: ed8d29f0e0ea
 Revises: 
-Create Date: 2017-01-21 21:59:57.420489
+Create Date: 2017-01-22 00:30:19.916252
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b88539daf71f'
+revision = 'ed8d29f0e0ea'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,8 +60,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('from_user', sa.Integer(), nullable=True),
     sa.Column('to_user', sa.Integer(), nullable=True),
-    sa.Column('from_start', sa.Integer(), nullable=True),
-    sa.Column('to_start', sa.Integer(), nullable=True),
+    sa.Column('from_star', sa.Integer(), nullable=True),
+    sa.Column('to_star', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['from_user'], ['user.id'], ),
     sa.ForeignKeyConstraint(['to_user'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -70,7 +70,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('image', sa.String(), nullable=True),
     sa.Column('record', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['record'], ['book_record.uuid'], ),
+    sa.ForeignKeyConstraint(['record'], ['book_record.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.drop_table('sqlite_stat1')

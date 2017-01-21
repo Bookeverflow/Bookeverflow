@@ -4,17 +4,91 @@
 
 
 {% block header %}
-<!-- <script src="/static/js/addbook.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/addbook.css"> -->
+<script src="/static/qrcode/qrcode.min.js"></script>
+<script src="/static/js/bookdetail.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/bookdetail.css">
 {% endblock %}
 
 {% block actionBtn %}
-  <div class="col-3">
+  <div class="col-3 actionBtn">
     Get this book
   </div>
 {% endblock %}
 
 
 {% block content %}
+
+<h1 class="row title"> {{ book.name }} </h1>
+<section class="row">
+  <div class="offset-2 col-8 text-center">
+    <img src="data:image/jpeg;base64,{{ book.get_image() }}" class="book-img">
+  </div>
+</section>
+<section class="row details">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>Description</td>
+        <td>{{ book.description }}</td>
+      </tr>
+      <tr>
+        <td>Language</td>
+        <td>{{ book.description }}</td>
+      </tr>
+      <tr>
+        <td>Author</td>
+        <td>{{ book.author }}</td>
+      </tr>
+      <tr>
+        <td>Current Owner</td>
+        <td>{{ current_owner.nickname }}</td>
+      </tr>
+      <tr>
+        <td>The Owner Grading (0 - 5, max=5)</td>
+        <td>
+          {% for i in range(current_owner.get_ranking()) %}
+          <i class="fa fa-star" aria-hidden="true"></i>
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <td>Owner prefered deal</td>
+        <td>{{ book.service_type }}</td>
+      </tr>
+      <tr>
+        <td>Available exchange place</td>
+        <td>{{ book.target_place }}</td>
+      </tr>
+      {% if book.service_type == "rent" %}
+      <tr>
+        <td>Price</td>
+        <td>{{ book.price }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+</section>
+<hr>
+<section class="row share-list">
+  <div class="col-6">Share this page through
+    <a class="fb-share-link">facebook</a> or QR code</div>
+  <div class="col-6" id="qrcode"></div>
+</section>
+
+<div id="disqus_thread"></div>
+<script>
+var disqus_config = function () {
+this.page.url = window.location.origin;
+this.page.identifier = window.location.pathname;
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//bookeverflow.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 {% endblock %}

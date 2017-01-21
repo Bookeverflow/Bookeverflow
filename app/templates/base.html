@@ -1,9 +1,9 @@
 <html>
   <head>
     {% if title %}
-    <title>{{ title }} - microblog</title>
+    <title>{{ title }} - bookeverflow</title>
     {% else %}
-    <title>microblog</title>
+    <title>bookeverflow</title>
     {% endif %}
 
     <script
@@ -17,6 +17,7 @@
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/headroom/headroom.min.js"></script>
     <script src="/static/headroom/jQuery.headroom.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Crimson+Text" rel="stylesheet">
 
 
     <link rel="stylesheet" type="text/css" href="/static/css/base.css">
@@ -52,7 +53,7 @@
         </div> -->
         <i class="col-3 fa fa-list fa-2x" aria-hidden="true"></i>
 
-        <div class="col-6 text-center logofield">
+        <div class="col-6 logofield">
         </div>
         {% block actionBtn %}
         {% endblock %}

@@ -11,5 +11,4 @@ class AddBookForm(FlaskForm):
     language = StringField('Book language')
     image = FileField('Upload a book image')
     price = IntegerField('Rent price')
-    service_type = IntegerField('Target Service:')
     target_place = StringField('Available location')

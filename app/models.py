@@ -31,6 +31,17 @@ class User(db.Model):
         except NameError:
             return str(self.id)  # python 3
 
+    def get_ranking(self):
+        all_rank = ExchangeRecord.query.filter_by(from_user=self.id).all()
+        if not all_rank or len(all_rank) == 0:
+            return 5
+        sumv = 0
+        cnt = 0
+        for rank in all_rank:
+            sumv += rank.from_star
+            cnt += 1
+        return sumv/cnt
+
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
@@ -65,8 +76,8 @@ class ExchangeRecord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     from_user = db.Column(db.Integer, db.ForeignKey('user.id'))
     to_user = db.Column(db.Integer, db.ForeignKey('user.id'))
-    from_start = db.Column(db.Integer, default=0)
-    to_start = db.Column(db.Integer, default=0)
+    from_star = db.Column(db.Integer, default=0)
+    to_star = db.Column(db.Integer, default=0)
 
 
 class RecordImage(db.Model):
