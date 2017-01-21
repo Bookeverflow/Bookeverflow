@@ -1,4 +1,5 @@
 import base64
+import json
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, facebook
@@ -124,7 +125,35 @@ def addbook():
 def bookdetail(record_uuid):
     book = BookRecord.query.filter_by(uuid=record_uuid).first()
     current_owner = User.query.filter_by(id=book.create_user).first()
+    existed_request = DealRequest.query\
+                                 .filter_by(requester=current_user.id)\
+                                 .filter_by(record=book.id)\
+                                 .first()
+    requested = False if not existed_request else True
     return render_template('bookdetail.html',
                            title=book.name,
                            book=book,
-                           current_owner=current_owner)
+                           current_owner=current_owner,
+                           requested=requested)
+
+
+@app.route('/makedeal/<record_uuid>', methods=['POST'])
+def deal_request(record_uuid):
+    bookrecord = BookRecord.query.filter_by(uuid=record_uuid).first()
+    if not bookrecord:
+        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+
+    existed_request = DealRequest.query\
+                                 .filter_by(requester=current_user.id)\
+                                 .filter_by(record=bookrecord.id)\
+                                 .first()
+    if existed_request:
+        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+
+    newrequest = DealRequest()
+    newrequest.requester = current_user.id
+    newrequest.dealer = bookrecord.create_user
+    newrequest.record = bookrecord.id
+    db.session.add(newrequest)
+    db.session.commit()
+    return json.dumps({'success': True}), 200, {'ContentType':'application/json'}

@@ -10,8 +10,13 @@
 {% endblock %}
 
 {% block actionBtn %}
-  <div class="col-3 actionBtn">
-    Get this book
+  <div class="col-3 actionBtn" data-uuid="{{book.uuid}}"
+      {%if requested %} data-requested="1" {% endif %}>
+    {% if requested %}
+      Already requested
+    {% else %}
+      Get this book
+    {% endif %}
   </div>
 {% endblock %}
 
@@ -52,7 +57,7 @@
         </td>
       </tr>
       <tr>
-        <td>Owner prefered deal</td>
+        <td>Owner preferred deal</td>
         <td>{{ book.service_type }}</td>
       </tr>
       <tr>

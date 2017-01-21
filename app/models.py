@@ -1,6 +1,5 @@
 from app import db
 import uuid
-import enum
 
 
 def generate_uuid():
@@ -67,6 +66,7 @@ class BookRecord(db.Model):
         else:
             return imagerecord.image
 
+
 class UserWantList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), index=True, unique=False)
@@ -84,3 +84,12 @@ class RecordImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String())
     record = db.Column(db.Integer, db.ForeignKey('book_record.id'))
+
+
+class DealRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    record = db.Column(db.Integer, db.ForeignKey('book_record.id'))
+    requester = db.Column(db.Integer, db.ForeignKey('user.id'))
+    dealer = db.Column(db.Integer, db.ForeignKey('user.id'))
+    processed = db.Column(db.Boolean, default=False, nullable=False)
+    accepted = db.Column(db.Boolean, default=False, nullable=False)
