@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 98714b154ea4
+Revision ID: b88539daf71f
 Revises: 
-Create Date: 2017-01-21 17:46:18.584908
+Create Date: 2017-01-21 21:59:57.420489
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '98714b154ea4'
+revision = 'b88539daf71f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,8 +26,15 @@ def upgrade():
     sa.UniqueConstraint('social_id')
     )
     op.create_index(op.f('ix_user_nickname'), 'user', ['nickname'], unique=False)
+    op.create_table('user_want_list',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=200), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_user_want_list_name'), 'user_want_list', ['name'], unique=False)
     op.create_table('book_record',
-    sa.Column('uuid', sa.String(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('uuid', sa.String(), nullable=True),
     sa.Column('create_user', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(length=200), nullable=True),
     sa.Column('book_type', sa.String(length=200), nullable=True),
@@ -39,7 +46,8 @@ def upgrade():
     sa.Column('price', sa.Integer(), nullable=True),
     sa.Column('is_exchanged', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['create_user'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('uuid')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('uuid')
     )
     op.create_index(op.f('ix_book_record_author'), 'book_record', ['author'], unique=False)
     op.create_index(op.f('ix_book_record_book_type'), 'book_record', ['book_type'], unique=False)
@@ -48,6 +56,23 @@ def upgrade():
     op.create_index(op.f('ix_book_record_name'), 'book_record', ['name'], unique=False)
     op.create_index(op.f('ix_book_record_service_type'), 'book_record', ['service_type'], unique=False)
     op.create_index(op.f('ix_book_record_target_place'), 'book_record', ['target_place'], unique=False)
+    op.create_table('exchange_record',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('from_user', sa.Integer(), nullable=True),
+    sa.Column('to_user', sa.Integer(), nullable=True),
+    sa.Column('from_start', sa.Integer(), nullable=True),
+    sa.Column('to_start', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['from_user'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['to_user'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('record_image',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('image', sa.String(), nullable=True),
+    sa.Column('record', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['record'], ['book_record.uuid'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.drop_table('sqlite_stat1')
     op.drop_table('sqlite_stat4')
     # ### end Alembic commands ###
@@ -68,6 +93,8 @@ def downgrade():
     sa.Column('idx', sa.NullType(), nullable=True),
     sa.Column('stat', sa.NullType(), nullable=True)
     )
+    op.drop_table('record_image')
+    op.drop_table('exchange_record')
     op.drop_index(op.f('ix_book_record_target_place'), table_name='book_record')
     op.drop_index(op.f('ix_book_record_service_type'), table_name='book_record')
     op.drop_index(op.f('ix_book_record_name'), table_name='book_record')
@@ -76,6 +103,8 @@ def downgrade():
     op.drop_index(op.f('ix_book_record_book_type'), table_name='book_record')
     op.drop_index(op.f('ix_book_record_author'), table_name='book_record')
     op.drop_table('book_record')
+    op.drop_index(op.f('ix_user_want_list_name'), table_name='user_want_list')
+    op.drop_table('user_want_list')
     op.drop_index(op.f('ix_user_nickname'), table_name='user')
     op.drop_table('user')
     # ### end Alembic commands ###

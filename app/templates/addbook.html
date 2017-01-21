@@ -18,7 +18,7 @@
 {% block content %}
 
   <!-- Search Bar -->
-  <form method="post" class="addbookform">
+  <form method="post" class="addbookform" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
     {{ render_field(form.name) }}

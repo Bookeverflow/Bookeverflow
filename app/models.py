@@ -35,7 +35,8 @@ class User(db.Model):
 
 
 class BookRecord(db.Model):
-    uuid = db.Column(db.String, name="uuid", primary_key=True, default=generate_uuid)
+    id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(db.String, name="uuid", unique=True, default=generate_uuid)
     create_user = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(200), index=True, unique=False)
     book_type = db.Column(db.String(200), index=True, unique=False)
@@ -63,5 +64,5 @@ class ExchangeRecord(db.Model):
 
 class RecordImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(), index=True)
-    record = db.Column(db.Integer, db.ForeignKey('exchange_record.id'))
+    image = db.Column(db.String())
+    record = db.Column(db.Integer, db.ForeignKey('book_record.uuid'))
