@@ -3,7 +3,6 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, facebook
 from models import User
 from forms import *
-from oauth import OAuthSignIn
 
 @lm.user_loader
 def load_user(id):
@@ -19,6 +18,9 @@ def before_request():
 @app.route('/index')
 def index():
     user = g.user
+    books = {
+        'name'
+    }
     return render_template('index.html',
                            title='Home',
                            user=user)
