@@ -11,12 +11,16 @@
 
 {% block actionBtn %}
   <div class="col-3 actionBtn" data-uuid="{{book.uuid}}"
-      {%if requested %} data-requested="1" {% endif %}>
-    {% if requested %}
-      Already requested
-    {% else %}
-      Get this book
-    {% endif %}
+      {%if not requested %} data-nrequested="1" {% endif %}>
+    {% if current_user.is_authenticated %}
+        {% if requested %}
+          Already requested
+        {% else %}
+          Get this book
+        {% endif %}
+      {% else %}
+        <a href="{{url_for('login')}}">Login</a>
+      {% endif %}
   </div>
 {% endblock %}
 

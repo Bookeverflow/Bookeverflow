@@ -43,15 +43,6 @@
     <div class="container-fluid">
 
       <header class="row vertical-align" id="header">
-      <!--
-        {% if current_user.is_authenticated %}
-        <h2>Hi, {{ current_user.nickname }}!</h2>
-        {% else %}
-        <h2>Hi, unknown</h2>
-        {% endif %} --><!--
-        <div class="col-3">
-          A
-        </div> -->
         <i class="col-3 fa fa-list fa-2x nav-btn" aria-hidden="true"></i>
 
         <div class="col-6 logofield">
@@ -74,6 +65,9 @@
           </a>
           <a href="{{ url_for('check_deal')}}" class="list-group-item">
             Check deal
+          </a>
+          <a href="{{ url_for('wishlist')}}" class="list-group-item">
+            My WishList
           </a>
         </ul>
       </nav>

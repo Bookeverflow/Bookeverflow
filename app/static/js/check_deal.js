@@ -8,7 +8,8 @@
             $.post('/makefinaldeal/' + uuid, {
                 'accept': isaccept
             }).done(function() {
-                location.reload();
+                notie().alert(3, 'Done', 2.5);
+                setTimeout(function() {location.reload();}, 1000);
             }).fail(function(xhr, status, error) {
                 notie().alert(3, error, 2.5);
             });

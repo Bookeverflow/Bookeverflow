@@ -69,6 +69,7 @@ class BookRecord(db.Model):
 
 class UserWantList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(200), index=True, unique=False)
 
 

@@ -28,8 +28,8 @@ def index():
             'image': record.get_image(),
             'name': record.name,
             'author': record.author,
-            'description': record.description if len(record.description) < 100 \
-        else record.description[:100] + '...',
+            'description': record.description if len(record.description) < 200 \
+        else record.description[:200] + '...',
             'service_type': record.service_type,
             'language': record.language
         } for record in bookrecords]
@@ -125,11 +125,15 @@ def addbook():
 def bookdetail(record_uuid):
     book = BookRecord.query.filter_by(uuid=record_uuid).first()
     current_owner = User.query.filter_by(id=book.create_user).first()
-    existed_request = DealRequest.query\
-                                 .filter_by(requester=current_user.id)\
-                                 .filter_by(record=book.id)\
-                                 .first()
-    requested = False if not existed_request else True
+
+    requested = True
+    if current_user.is_authenticated:
+        existed_request = DealRequest.query\
+                                     .filter_by(requester=current_user.id)\
+                                     .filter_by(record=book.id)\
+                                     .first()
+        requested = False if not existed_request else True
+
     return render_template('bookdetail.html',
                            title=book.name,
                            book=book,
@@ -138,6 +142,7 @@ def bookdetail(record_uuid):
 
 
 @app.route('/makedeal/<record_uuid>', methods=['POST'])
+@login_required
 def deal_request(record_uuid):
     bookrecord = BookRecord.query.filter_by(uuid=record_uuid).first()
     if not bookrecord:
@@ -160,6 +165,7 @@ def deal_request(record_uuid):
 
 
 @app.route('/check_request')
+@login_required
 def check_request():
     allrequest = DealRequest.query.filter_by(requester=current_user.id).all()
     datas = []
@@ -196,6 +202,7 @@ def check_deal():
 
 
 @app.route('/makefinaldeal/<record_uuid>', methods=['POST'])
+@login_required
 def deal_decision(record_uuid):
     bookrecord = BookRecord.query.filter_by(uuid=record_uuid).first()
     if not bookrecord:
@@ -217,3 +224,12 @@ def deal_decision(record_uuid):
     thisrequest.accepted = decision == 'true'
     db.session.commit()
     return json.dumps({'success': True}), 200, {'ContentType':'application/json'}
+
+
+@app.route('/wishlist')
+@login_required
+def wishlist():
+    wishlist = UserWantList.query.filter_by(user=current_user.id).all()
+    return render_template('wishlist.html',
+                           title='Wish List',
+                           wishlist=wishlist)
