@@ -1,3 +1,16 @@
 .searchrow {
     padding-bottom: 5px;
 }
+
+.book-img {
+  max-height: 200px;
+  max-width: 100%;
+}
+
+.detail {
+  padding: 2px 5px;
+  background-color: rgba(128, 128, 128, 0.28);
+  border: solid 0px;
+  border-radius: 4px;
+  margin: 7px 10px;
+}
