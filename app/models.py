@@ -61,3 +61,7 @@ class ExchangeRecord(db.Model):
     to_start = db.Column(db.Integer, default=0)
 
 
+class RecordImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), index=True)
+    record = db.Column(db.Integer, db.ForeignKey('exchange_record.id'))

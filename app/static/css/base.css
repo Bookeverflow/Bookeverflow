@@ -1,0 +1,26 @@
+#header {
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    background-color: rgba(161, 243, 187, 0.5);
+    height: 50px;
+}
+
+.header-holder {
+    height: 55px;
+    background-color: rgb(161, 243, 187);
+    margin-bottom: 8px;
+}
+
+.headroom{
+    transition:transform .25s ease-in-out;
+    will-change:transform
+}
+
+.headroom--pinned{
+    transform:translateY(0)
+}
+
+.headroom--unpinned{
+    transform:translateY(-120%)
+}

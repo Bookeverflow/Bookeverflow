@@ -1,28 +1,39 @@
 {% extends "base.html" %}
-{% block content %}
-  <div class="row">
-  <!--
-    {% if current_user.is_authenticated %}
-    <h2>Hi, {{ current_user.nickname }}!</h2>
-    {% else %}
-    <h2>Hi, unknown</h2>
-    {% endif %} --><!--
-    <div class="col-3">
-      A
-    </div> -->
-    <i class="col-3 fa fa-list fa-3x" aria-hidden="true"></i>
 
-    <div class="col-6 text-center">
-      Bookeverflow
-    </div>
-    <div class="col-3">
-      Add a new book
-    </div>
-  </div>
-  <div class="row">
+{% block header %}
+<link rel="stylesheet" type="text/css" href="/static/css/index.css">
+<script src="/static/js/index.js"></script>
+{% endblock %}
+
+{% block actionBtn %}
+  <a class="col-3" href="{{ url_for('addbook') }}">
+    Add a new Book
+  </a>
+{% endblock %}
+
+
+{% block content %}
+
+  <!-- Search Bar -->
+  <section class="row searchrow">
     <input type="text" placeholder="Searching for book" class="col-12">
-  </div>
-  <div class="row">
-  </div>
+  </section>
+
+  <!-- Book Record -->
+  <section class="row">
+    <div class="col-12">
+    {% for book in books %}
+      <div class="row">
+        <div>
+          <img src="data:image/jpeg;base64,{{ book.image }}">
+        </div>
+        <div>{{ book.name }}</div>
+        <div>{{ book.author }}</div>
+        <div>{{ book.service_type }}</div>
+        <div>{{ book.language }}</div>
+      </div>
+    {% endfor %}
+    </div>
+  </section>
 
 {% endblock %}

@@ -1,0 +1,34 @@
+{% from "_formhelpers.html" import render_field %}
+
+{% extends "base.html" %}
+
+
+{% block header %}
+<script src="/static/js/addbook.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/addbook.css">
+{% endblock %}
+
+{% block actionBtn %}
+  <div class="col-3 confirmBtn">
+    Confirm
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+  <!-- Search Bar -->
+  <form method="post" class="addbookform">
+    {{ form.csrf_token }}
+
+    {{ render_field(form.name) }}
+    {{ render_field(form.author) }}
+    {{ render_field(form.book_type) }}
+    {{ render_field(form.language) }}
+    {{ render_field(form.description) }}
+    {{ render_field(form.price) }}
+    {{ render_field(form.service_type) }}
+    {{ render_field(form.target_place) }}
+    {{ render_field(form.image) }}
+  </form>
+{% endblock %}

@@ -7,10 +7,12 @@ from flask_login import LoginManager
 from flask_openid import OpenID
 from config import basedir
 from flask_oauth import OAuth
+from flask_wtf.csrf import CSRFProtect
 
 
 app = Flask(__name__, static_url_path='/static')
 app.config.from_object('config')
+csrf = CSRFProtect(app)
 
 lm = LoginManager()
 lm.init_app(app)
