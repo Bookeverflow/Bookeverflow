@@ -226,10 +226,32 @@ def deal_decision(record_uuid):
     return json.dumps({'success': True}), 200, {'ContentType':'application/json'}
 
 
-@app.route('/wishlist')
+@app.route('/wishlist', methods=['GET', 'POST'])
 @login_required
 def wishlist():
+    form = UserWishForm(request.form)
+    if request.method == 'POST' and form.name.data:
+        newwishlist = UserWantList()
+        newwishlist.user = current_user.id
+        newwishlist.name = form.name.data
+        db.session.add(newwishlist)
+        db.session.commit()
+
     wishlist = UserWantList.query.filter_by(user=current_user.id).all()
     return render_template('wishlist.html',
                            title='Wish List',
+                           form=form,
                            wishlist=wishlist)
+
+
+@app.route('/deletewish/<id>', methods=['POST'])
+@login_required
+def deletewish(id):
+    wish = UserWantList.query.filter_by(id=id).first()
+
+    if not wish:
+        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+
+    db.session.delete(wish)
+    db.session.commit()
+    return json.dumps({'success': True}), 200, {'ContentType':'application/json'}

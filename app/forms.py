@@ -12,3 +12,7 @@ class AddBookForm(FlaskForm):
     image = FileField('Upload a book image')
     price = IntegerField('Rent price')
     target_place = StringField('Available location')
+
+
+class UserWishForm(FlaskForm):
+    name = StringField('Book name', [validators.DataRequired()])

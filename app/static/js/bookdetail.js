@@ -10,8 +10,8 @@
                 type: 'POST',
                 url: '/makedeal/' + uuid,
                 success: function() {
-                    notie().alert(3, 'Success added', 2.5);
-                    setTimeout(function() {location.reload();}, 2000);
+                    notie().alert(1, 'Successfully added', 2.5);
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
                     notie().alert(3, error, 2.5);

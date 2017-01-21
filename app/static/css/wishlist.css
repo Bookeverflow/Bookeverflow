@@ -1,0 +1,14 @@
+.crossBtn {
+  color: red;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.wishitem {
+  cursor: pointer;
+}
+
+.wishitem:hover {
+  background-color: rgb(200, 200, 200);
+}
