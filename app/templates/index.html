@@ -1,10 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-     {% if current_user.is_authenticated %}
-            <h2>Hi, {{ current_user.nickname }}!</h2>
-            <p><a href="{{ url_for('logout') }}">Logout</a></p>
-        {% else %}
-            <h2>I don't know you!</h2>
-            <p><a href="{{ url_for('login') }}">Login with Facebook</a></p>
-        {% endif %}
+  <div class="row">
+  <!--
+    {% if current_user.is_authenticated %}
+    <h2>Hi, {{ current_user.nickname }}!</h2>
+    {% else %}
+    <h2>Hi, unknown</h2>
+    {% endif %} --><!--
+    <div class="col-3">
+      A
+    </div> -->
+    <i class="col-3 fa fa-list fa-3x" aria-hidden="true"></i>
+
+    <div class="col-6 text-center">
+      Bookeverflow
+    </div>
+    <div class="col-3">
+      Add a new book
+    </div>
+  </div>
+  <div class="row">
+    <input type="text" placeholder="Searching for book" class="col-12">
+  </div>
+  <div class="row">
+  </div>
+
 {% endblock %}

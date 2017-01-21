@@ -9,7 +9,7 @@ from config import basedir
 from flask_oauth import OAuth
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config.from_object('config')
 
 lm = LoginManager()
