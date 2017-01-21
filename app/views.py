@@ -172,5 +172,48 @@ def check_request():
             'b': r.get_book()
         })
     return render_template('check_request.html',
-                           title='Request Result',
+                           title='Request List',
                            datas=datas)
+
+
+@app.route('/check_deal')
+def check_deal():
+    allrequest = DealRequest.query.filter_by(dealer=current_user.id).all()
+    datas = []
+    for r in allrequest:
+        result = None
+        if r.processed:
+            result = 'Accepted' if r.accepted else 'Rejected'
+        datas.append({
+            'result': result,
+            'processed': r.processed,
+            'requester': User.query.filter_by(id=r.requester).first(),
+            'b': r.get_book()
+        })
+    return render_template('check_deal.html',
+                           title='Deal List',
+                           datas=datas)
+
+
+@app.route('/makefinaldeal/<record_uuid>', methods=['POST'])
+def deal_decision(record_uuid):
+    bookrecord = BookRecord.query.filter_by(uuid=record_uuid).first()
+    if not bookrecord:
+        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+
+    thisrequest = DealRequest.query\
+                             .filter_by(requester=current_user.id)\
+                             .filter_by(record=bookrecord.id)\
+                             .first()
+    if not thisrequest:
+        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+
+    decision = request.values.get('accept', None)
+
+    if decision is None:
+        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+
+    thisrequest.processed = True
+    thisrequest.accepted = decision == 'true'
+    db.session.commit()
+    return json.dumps({'success': True}), 200, {'ContentType':'application/json'}

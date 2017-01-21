@@ -72,3 +72,17 @@
     display: flex;
     align-items: center;
 }
+
+.decisionBtn {
+  color: blue;
+  cursor: pointer;
+}
+
+.decisionBtn:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.fa-star {
+  color: yellow;
+}

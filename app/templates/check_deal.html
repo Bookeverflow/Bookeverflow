@@ -4,6 +4,7 @@
 
 
 {% block header %}
+<script src="/static/js/check_deal.js"></script>
 {% endblock %}
 
 {% block actionBtn %}
@@ -21,7 +22,9 @@
         <th>Link</th>
         <th>Book Name</th>
         <th>Service Type</th>
-        <th>Progress</th>
+        <th>Requester Name</th>
+        <th>Requester Rank</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -32,7 +35,20 @@
         </td>
         <td>{{ data.b.name }}</td>
         <td>{{ data.b.service_type }}</td>
-        <td>{{ data.progress }}</td>
+        <td>{{ data.requester.nickname }}</td>
+        <td>
+          {% for i in range(data.requester.get_ranking()) %}
+          <i class="fa fa-star" aria-hidden="true"></i>
+          {% endfor %}
+        </td>
+        <td>
+          {% if not data.processed  %}
+            <div class="decisionBtn" data-uuid="{{data.b.uuid}}" data-accept="1">Accept</div>
+            <div class="decisionBtn" data-uuid="{{data.b.uuid}}" data-accept="0">Reject</div>
+          {% else %}
+            {{ data.result }}
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
 
