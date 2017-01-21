@@ -93,3 +93,6 @@ class DealRequest(db.Model):
     dealer = db.Column(db.Integer, db.ForeignKey('user.id'))
     processed = db.Column(db.Boolean, default=False, nullable=False)
     accepted = db.Column(db.Boolean, default=False, nullable=False)
+
+    def get_book(self):
+        return BookRecord.query.filter_by(id=self.record).first()

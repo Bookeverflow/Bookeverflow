@@ -1,0 +1,45 @@
+{% from "_formhelpers.html" import render_field %}
+
+{% extends "base.html" %}
+
+
+{% block header %}
+<script src="/static/js/addbook.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/addbook.css">
+{% endblock %}
+
+{% block actionBtn %}
+<a class="col-3 actionBtn" href="{{ url_for('index') }}">
+  Back
+</a>
+{% endblock %}
+
+
+{% block content %}
+<section class="row details">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Link</th>
+        <th>Book Name</th>
+        <th>Service Type</th>
+        <th>Progress</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in datas %}
+      <tr>
+        <td>
+          <a href="/bookdetail/{{data.b.uuid}}"><i class="fa fa-link" aria-hidden="true"></i></a>
+        </td>
+        <td>{{ data.b.name }}</td>
+        <td>{{ data.b.service_type }}</td>
+        <td>{{ data.progress }}</td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+</section>
+{% endblock %}

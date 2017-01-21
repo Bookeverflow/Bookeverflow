@@ -52,15 +52,33 @@
         <div class="col-3">
           A
         </div> -->
-        <i class="col-3 fa fa-list fa-2x" aria-hidden="true"></i>
+        <i class="col-3 fa fa-list fa-2x nav-btn" aria-hidden="true"></i>
 
         <div class="col-6 logofield">
         </div>
         {% block actionBtn %}
         {% endblock %}
       </header>
-      <div class="row header-holder"></div>
 
+      <nav class="row navi-bar invisible">
+        <ul class="list-group text-center list-nav">
+          <li class="list-group-item">
+            {% if current_user.is_authenticated %}
+            <h2>Hi, {{ current_user.nickname }}!</h2>
+            {% else %}
+            <h2><a href="{{ url_for('login')}}">Login</a></h2>
+            {% endif %}
+          </li>
+          <a href="{{ url_for('check_request')}}" class="list-group-item">
+            Check request
+          </a>
+          <a href="" class="list-group-item">
+            Check deal
+          </a>
+        </ul>
+      </nav>
+
+      <div class="row header-holder"></div>
       {% block content %}
       {% endblock %}
     </div>

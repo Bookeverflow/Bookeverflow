@@ -157,3 +157,20 @@ def deal_request(record_uuid):
     db.session.add(newrequest)
     db.session.commit()
     return json.dumps({'success': True}), 200, {'ContentType':'application/json'}
+
+
+@app.route('/check_request')
+def check_request():
+    allrequest = DealRequest.query.filter_by(requester=current_user.id).all()
+    datas = []
+    for r in allrequest:
+        progress = 'Not Yet'
+        if r.processed:
+            progress = 'Accepted' if r.accepted else 'Rejected'
+        datas.append({
+            'progress': progress,
+            'b': r.get_book()
+        })
+    return render_template('check_request.html',
+                           title='Request Result',
+                           datas=datas)
